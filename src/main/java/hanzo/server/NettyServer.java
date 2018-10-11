@@ -1,3 +1,5 @@
+package hanzo.server;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -5,7 +7,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
- * NettyServer
+ * hanzo.server.NettyServer
  *
  * @author igaozp
  */

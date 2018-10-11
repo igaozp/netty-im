@@ -1,3 +1,5 @@
+package hanzo.client;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -7,7 +9,7 @@ import java.util.Date;
 
 
 /**
- * FirstClientHandler
+ * hanzo.client.FirstClientHandler
  *
  * @author igaozp
  */

@@ -1,5 +1,6 @@
+package hanzo.client;
+
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -9,7 +10,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
- * NettyClient
+ * hanzo.client.NettyClient
  *
  * @author igaozp
  */
