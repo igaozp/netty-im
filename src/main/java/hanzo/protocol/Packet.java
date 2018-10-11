@@ -1,4 +1,4 @@
-package hanzo.protocol.command;
+package hanzo.protocol;
 
 import lombok.Data;
 

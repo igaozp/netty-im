@@ -1,5 +1,6 @@
-package hanzo.protocol.command;
+package hanzo.protocol;
 
+import hanzo.protocol.request.LoginRequestPacket;
 import hanzo.serialize.Serializer;
 import hanzo.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -11,27 +12,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * PacketCodeC
+ * PacketCodec
  *
  * @author igaozp
  */
-public class PacketCodeC {
+public class PacketCodec {
     private static final int MAGIC_NUMBER = 0x19120623;
-    private static final Map<Byte, Class<? extends Packet>> packetTypeMap;
-    private static final Map<Byte, Serializer> serializerMap;
+    public static final PacketCodec INSTANCE = new PacketCodec();
+    private static final Map<Byte, Class<? extends Packet>> PACKET_TYPE_MAP;
+    private static final Map<Byte, Serializer> SERIALIZER_MAP;
 
     static {
-        packetTypeMap = new HashMap<>();
-        packetTypeMap.put(LOGIN_REQUEST, LoginRequestPacket.class);
+        PACKET_TYPE_MAP = new HashMap<>();
+        PACKET_TYPE_MAP.put(LOGIN_REQUEST, LoginRequestPacket.class);
 
-        serializerMap = new HashMap<>();
+        SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();
-        serializerMap.put(serializer.getSerializerAlgorithm(), serializer);
+        SERIALIZER_MAP.put(serializer.getSerializerAlgorithm(), serializer);
     }
 
-    public ByteBuf encode(Packet packet) {
+    public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
         // 创建 ByteBuf 对象
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
+        ByteBuf byteBuf = byteBufAllocator.ioBuffer();
         // 序列化对象
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
 
@@ -72,10 +74,10 @@ public class PacketCodeC {
     }
 
     private Serializer getSerializer(byte serializeAlgorithm) {
-        return serializerMap.get(serializeAlgorithm);
+        return SERIALIZER_MAP.get(serializeAlgorithm);
     }
 
     private Class<? extends Packet> getRequestType(byte command) {
-        return packetTypeMap.get(command);
+        return PACKET_TYPE_MAP.get(command);
     }
 }
