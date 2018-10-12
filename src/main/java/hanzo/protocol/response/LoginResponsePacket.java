@@ -1,6 +1,7 @@
 package hanzo.protocol.response;
 
 import hanzo.protocol.Packet;
+import lombok.Data;
 
 import static hanzo.protocol.command.Command.LOGIN_RESPONSE;
 
@@ -9,6 +10,7 @@ import static hanzo.protocol.command.Command.LOGIN_RESPONSE;
  *
  * @author igaozp
  */
+@Data
 public class LoginResponsePacket extends Packet {
     private boolean success;
     private String reason;
@@ -16,21 +18,5 @@ public class LoginResponsePacket extends Packet {
     @Override
     public Byte getCommand() {
         return LOGIN_RESPONSE;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
     }
 }

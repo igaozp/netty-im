@@ -1,12 +1,15 @@
 package hanzo.protocol;
 
 import hanzo.protocol.request.LoginRequestPacket;
+import hanzo.protocol.request.MessageRequestPacket;
+import hanzo.protocol.response.LoginResponsePacket;
+import hanzo.protocol.response.MessageResponsePacket;
 import hanzo.serialize.Serializer;
 import hanzo.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 
-import static hanzo.protocol.command.Command.LOGIN_REQUEST;
+import static hanzo.protocol.command.Command.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,13 +21,16 @@ import java.util.Map;
  */
 public class PacketCodec {
     private static final int MAGIC_NUMBER = 0x19120623;
-    public static final PacketCodec INSTANCE = new PacketCodec();
     private static final Map<Byte, Class<? extends Packet>> PACKET_TYPE_MAP;
     private static final Map<Byte, Serializer> SERIALIZER_MAP;
+    public static final PacketCodec INSTANCE = new PacketCodec();
 
     static {
         PACKET_TYPE_MAP = new HashMap<>();
         PACKET_TYPE_MAP.put(LOGIN_REQUEST, LoginRequestPacket.class);
+        PACKET_TYPE_MAP.put(LOGIN_RESPONSE, LoginResponsePacket.class);
+        PACKET_TYPE_MAP.put(MESSAGE_REQUEST, MessageRequestPacket.class);
+        PACKET_TYPE_MAP.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();

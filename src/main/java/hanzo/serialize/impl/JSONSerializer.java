@@ -5,7 +5,9 @@ import hanzo.serialize.Serializer;
 import hanzo.serialize.SerializerAlgorithm;
 
 /**
- * @author Atometa
+ * JSONSerializer
+ *
+ * @author igaozp
  */
 public class JSONSerializer implements Serializer {
     @Override

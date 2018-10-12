@@ -4,6 +4,8 @@ import hanzo.protocol.request.LoginRequestPacket;
 import hanzo.protocol.Packet;
 import hanzo.protocol.PacketCodec;
 import hanzo.protocol.response.LoginResponsePacket;
+import hanzo.protocol.response.MessageResponsePacket;
+import hanzo.util.LoginUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -12,7 +14,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * hanzo.client.ClientHandler
+ * ClientHandler
  *
  * @author igaozp
  */
@@ -40,14 +42,18 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
         Packet packet = PacketCodec.INSTANCE.decode(byteBuf);
 
-        if (packet instanceof LoginRequestPacket) {
+        if (packet instanceof LoginResponsePacket) {
             LoginResponsePacket loginResponsePacket = (LoginResponsePacket) packet;
 
             if (loginResponsePacket.isSuccess()) {
                 System.out.println(new Date() + ": 客户端登录成功");
+                LoginUtil.markAsLogin(ctx.channel());
             } else {
                 System.out.println(new Date() + ": 客户端登录失败，原因: " + loginResponsePacket.getReason());
             }
+        } else if (packet instanceof MessageResponsePacket) {
+            MessageResponsePacket messageResponsePacket = (MessageResponsePacket) packet;
+            System.out.println(new Date() + ": 收到服务端的消息: " + messageResponsePacket.getMessage());
         }
     }
 }
