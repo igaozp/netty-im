@@ -37,9 +37,7 @@ public class PacketCodec {
         SERIALIZER_MAP.put(serializer.getSerializerAlgorithm(), serializer);
     }
 
-    public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
-        // 创建 ByteBuf 对象
-        ByteBuf byteBuf = byteBufAllocator.ioBuffer();
+    public void encode(ByteBuf byteBuf, Packet packet) {
         // 序列化对象
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
 
@@ -50,19 +48,21 @@ public class PacketCodec {
         byteBuf.writeByte(packet.getCommand());
         byteBuf.writeInt(bytes.length);
         byteBuf.writeBytes(bytes);
-
-        return byteBuf;
     }
 
     public Packet decode(ByteBuf byteBuf) {
         // 跳过 Magic Number
         byteBuf.skipBytes(4);
+
         // 跳过版本号
         byteBuf.skipBytes(1);
+
         // 序列化算法
         byte serializeAlgorithm = byteBuf.readByte();
+
         // 指令
         byte command = byteBuf.readByte();
+
         // 数据包长度
         int length = byteBuf.readInt();
 

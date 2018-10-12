@@ -1,5 +1,9 @@
 package hanzo.client;
 
+import hanzo.client.handler.LoginResponseHandler;
+import hanzo.client.handler.MessageResponseHandler;
+import hanzo.codec.PacketDecoder;
+import hanzo.codec.PacketEncoder;
 import hanzo.protocol.PacketCodec;
 import hanzo.protocol.request.MessageRequestPacket;
 import hanzo.util.LoginUtil;
@@ -40,7 +44,10 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel channel) {
-                        channel.pipeline().addLast(new ClientHandler());
+                        channel.pipeline().addLast(new PacketDecoder());
+                        channel.pipeline().addLast(new LoginResponseHandler());
+                        channel.pipeline().addLast(new MessageResponseHandler());
+                        channel.pipeline().addLast(new PacketEncoder());
                     }
                 });
 
@@ -74,10 +81,7 @@ public class NettyClient {
                     Scanner scanner = new Scanner(System.in);
                     String line = scanner.nextLine();
 
-                    MessageRequestPacket packet = new MessageRequestPacket();
-                    packet.setMessage(line);
-                    ByteBuf byteBuf = PacketCodec.INSTANCE.encode(channel.alloc(), packet);
-                    channel.writeAndFlush(byteBuf);
+                    channel.writeAndFlush(new MessageRequestPacket(line));
                 }
             }
         }).start();

@@ -1,5 +1,9 @@
 package hanzo.server;
 
+import hanzo.codec.PacketDecoder;
+import hanzo.codec.PacketEncoder;
+import hanzo.server.handler.LoginRequestHandler;
+import hanzo.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -30,8 +34,11 @@ public class NettyServer {
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
-                    protected void initChannel(NioSocketChannel nioSocketChannel) {
-                        nioSocketChannel.pipeline().addLast(new ServerHandler());
+                    protected void initChannel(NioSocketChannel channel) {
+                        channel.pipeline().addLast(new PacketDecoder());
+                        channel.pipeline().addLast(new LoginRequestHandler());
+                        channel.pipeline().addLast(new MessageRequestHandler());
+                        channel.pipeline().addLast(new PacketEncoder());
                     }
                 });
         bind(serverBootstrap);
