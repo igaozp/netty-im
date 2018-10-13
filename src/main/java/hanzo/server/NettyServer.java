@@ -3,6 +3,7 @@ package hanzo.server;
 import hanzo.codec.PacketDecoder;
 import hanzo.codec.PacketEncoder;
 import hanzo.codec.Spliter;
+import hanzo.server.handler.AuthHandler;
 import hanzo.server.handler.LoginRequestHandler;
 import hanzo.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -39,6 +40,7 @@ public class NettyServer {
                         channel.pipeline().addLast(new Spliter());
                         channel.pipeline().addLast(new PacketDecoder());
                         channel.pipeline().addLast(new LoginRequestHandler());
+                        channel.pipeline().addLast(new AuthHandler());
                         channel.pipeline().addLast(new MessageRequestHandler());
                         channel.pipeline().addLast(new PacketEncoder());
                     }

@@ -2,6 +2,7 @@ package hanzo.server.handler;
 
 import hanzo.protocol.request.LoginRequestPacket;
 import hanzo.protocol.response.LoginResponsePacket;
+import hanzo.util.LoginUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -22,6 +23,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         if (valid(loginRequestPacket)) {
             loginResponsePacket.setSuccess(true);
             System.out.println(new Date() + ": 登录成功！");
+            LoginUtil.markAsLogin(context.channel());
         } else {
             loginResponsePacket.setReason("账号密码校验失败");
             loginResponsePacket.setSuccess(false);
