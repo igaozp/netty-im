@@ -4,11 +4,10 @@ import hanzo.client.handler.LoginResponseHandler;
 import hanzo.client.handler.MessageResponseHandler;
 import hanzo.codec.PacketDecoder;
 import hanzo.codec.PacketEncoder;
-import hanzo.protocol.PacketCodec;
+import hanzo.codec.Spliter;
 import hanzo.protocol.request.MessageRequestPacket;
 import hanzo.util.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -19,7 +18,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.util.Date;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * NettyClient
@@ -44,6 +43,7 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel channel) {
+                        channel.pipeline().addLast(new Spliter());
                         channel.pipeline().addLast(new PacketDecoder());
                         channel.pipeline().addLast(new LoginResponseHandler());
                         channel.pipeline().addLast(new MessageResponseHandler());

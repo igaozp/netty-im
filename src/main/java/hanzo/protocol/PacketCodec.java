@@ -20,10 +20,10 @@ import java.util.Map;
  * @author igaozp
  */
 public class PacketCodec {
-    private static final int MAGIC_NUMBER = 0x19120623;
+    public static final int MAGIC_NUMBER = 0x19120623;
+    public static final PacketCodec INSTANCE = new PacketCodec();
     private static final Map<Byte, Class<? extends Packet>> PACKET_TYPE_MAP;
     private static final Map<Byte, Serializer> SERIALIZER_MAP;
-    public static final PacketCodec INSTANCE = new PacketCodec();
 
     static {
         PACKET_TYPE_MAP = new HashMap<>();
