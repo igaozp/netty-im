@@ -1,5 +1,6 @@
 package hanzo.attribute;
 
+import hanzo.session.Session;
 import io.netty.util.AttributeKey;
 
 /**
@@ -8,5 +9,5 @@ import io.netty.util.AttributeKey;
  * @author igaozp
  */
 public interface Attributes {
-    AttributeKey<Boolean> LOGIN = AttributeKey.newInstance("login");
+    AttributeKey<Session> SESSION = AttributeKey.newInstance("session");
 }

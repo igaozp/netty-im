@@ -5,8 +5,9 @@ import hanzo.client.handler.MessageResponseHandler;
 import hanzo.codec.PacketDecoder;
 import hanzo.codec.PacketEncoder;
 import hanzo.codec.Spliter;
+import hanzo.protocol.request.LoginRequestPacket;
 import hanzo.protocol.request.MessageRequestPacket;
-import hanzo.util.LoginUtil;
+import hanzo.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -74,16 +75,33 @@ public class NettyClient {
     }
 
     private static void startConsoleThread(Channel channel) {
+        Scanner scanner = new Scanner(System.in);
+        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+
         new Thread(() -> {
             while (!Thread.interrupted()) {
-                if (LoginUtil.hasLogin(channel)) {
-                    System.out.println("输入消息发送至服务器: ");
-                    Scanner scanner = new Scanner(System.in);
-                    String line = scanner.nextLine();
+                if (!SessionUtil.hasLogin(channel)) {
+                    System.out.println("输入用户名登录: ");
+                    String userName = scanner.nextLine();
+                    loginRequestPacket.setUsername(userName);
+                    loginRequestPacket.setPassword("password");
 
-                    channel.writeAndFlush(new MessageRequestPacket(line));
+                    channel.writeAndFlush(loginRequestPacket);
+                    waitForLoginResponse();
+                } else {
+                    String toUserId = scanner.next();
+                    String message = scanner.next();
+                    channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
                 }
             }
         }).start();
+    }
+
+    private static void waitForLoginResponse() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException exception) {
+            exception.printStackTrace();
+        }
     }
 }
