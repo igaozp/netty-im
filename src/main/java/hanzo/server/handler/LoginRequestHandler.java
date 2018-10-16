@@ -3,12 +3,13 @@ package hanzo.server.handler;
 import hanzo.protocol.request.LoginRequestPacket;
 import hanzo.protocol.response.LoginResponsePacket;
 import hanzo.session.Session;
+import hanzo.util.IDUtil;
 import hanzo.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * LoginRequestHandler
@@ -24,7 +25,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
 
         if (valid(loginRequestPacket)) {
             loginResponsePacket.setSuccess(true);
-            String userId = randomUserId();
+            String userId = IDUtil.randomId();
             loginResponsePacket.setUserId(userId);
             System.out.println("【" + loginRequestPacket.getUsername() + "】登录成功");
             SessionUtil.bindSession(new Session(userId, loginRequestPacket.getUsername()), context.channel());
@@ -40,10 +41,6 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
 
     private boolean valid(LoginRequestPacket loginRequestPacket) {
         return true;
-    }
-
-    private static String randomUserId() {
-        return UUID.randomUUID().toString().split("-")[0];
     }
 
     @Override

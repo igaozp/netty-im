@@ -1,8 +1,12 @@
 package hanzo.protocol;
 
+import hanzo.protocol.request.CreateGroupRequestPacket;
 import hanzo.protocol.request.LoginRequestPacket;
+import hanzo.protocol.request.LogoutRequestPacket;
 import hanzo.protocol.request.MessageRequestPacket;
+import hanzo.protocol.response.CreateGroupResponsePacket;
 import hanzo.protocol.response.LoginResponsePacket;
+import hanzo.protocol.response.LogoutResponsePacket;
 import hanzo.protocol.response.MessageResponsePacket;
 import hanzo.serialize.Serializer;
 import hanzo.serialize.impl.JSONSerializer;
@@ -31,6 +35,10 @@ public class PacketCodec {
         PACKET_TYPE_MAP.put(LOGIN_RESPONSE, LoginResponsePacket.class);
         PACKET_TYPE_MAP.put(MESSAGE_REQUEST, MessageRequestPacket.class);
         PACKET_TYPE_MAP.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
+        PACKET_TYPE_MAP.put(LOGOUT_REQUEST, LogoutRequestPacket.class);
+        PACKET_TYPE_MAP.put(LOGOUT_RESPONSE, LogoutResponsePacket.class);
+        PACKET_TYPE_MAP.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        PACKET_TYPE_MAP.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();
