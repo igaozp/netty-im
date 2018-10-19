@@ -16,7 +16,13 @@ import java.util.Date;
  *
  * @author igaozp
  */
+@ChannelHandler.Sharable
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
+    public static final LoginRequestHandler INSTANCE = new LoginRequestHandler();
+
+    public LoginRequestHandler() {
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext context, LoginRequestPacket loginRequestPacket) {
         LoginResponsePacket loginResponsePacket = new LoginResponsePacket();

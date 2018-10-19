@@ -5,6 +5,7 @@ import hanzo.protocol.response.CreateGroupResponsePacket;
 import hanzo.util.IDUtil;
 import hanzo.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -18,7 +19,13 @@ import java.util.List;
  *
  * @author igaozp
  */
+@ChannelHandler.Sharable
 public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
+    public static final CreateGroupRequestHandler INSTANCE = new CreateGroupRequestHandler();
+
+    public CreateGroupRequestHandler() {
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext context, CreateGroupRequestPacket createGroupRequestPacket) {
         List<String> userIdList = createGroupRequestPacket.getUserIdList();

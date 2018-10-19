@@ -1,5 +1,6 @@
 package hanzo.protocol;
 
+import hanzo.client.handler.GroupMessageResponseHandler;
 import hanzo.protocol.request.*;
 import hanzo.protocol.response.*;
 import hanzo.serialize.Serializer;
@@ -38,6 +39,8 @@ public class PacketCodec {
         PACKET_TYPE_MAP.put(QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
         PACKET_TYPE_MAP.put(LIST_GROUP_MEMBERS_REQUEST, ListGroupMembersRequestPacket.class);
         PACKET_TYPE_MAP.put(LIST_GROUP_MEMBERS_RESPONSE, ListGroupMembersResponsePacket.class);
+        PACKET_TYPE_MAP.put(GROUP_MESSAGE_REQUEST, GroupMessageRequestPacket.class);
+        PACKET_TYPE_MAP.put(GROUP_MESSAGE_RESPONSE, GroupMessageResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();

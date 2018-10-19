@@ -3,6 +3,7 @@ package hanzo.server.handler;
 import hanzo.protocol.request.GroupMessageRequestPacket;
 import hanzo.protocol.response.GroupMessageResponsePacket;
 import hanzo.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -12,6 +13,7 @@ import io.netty.channel.group.ChannelGroup;
  *
  * @author igaozp
  */
+@ChannelHandler.Sharable
 public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<GroupMessageRequestPacket> {
     public static final GroupMessageRequestHandler INSTANCE = new GroupMessageRequestHandler();
 

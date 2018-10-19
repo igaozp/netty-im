@@ -1,5 +1,6 @@
 package hanzo.server;
 
+import hanzo.codec.PacketCodecHandler;
 import hanzo.codec.PacketDecoder;
 import hanzo.codec.PacketEncoder;
 import hanzo.codec.Spliter;
@@ -36,16 +37,10 @@ public class NettyServer {
                     @Override
                     protected void initChannel(NioSocketChannel channel) {
                         channel.pipeline().addLast(new Spliter());
-                        channel.pipeline().addLast(new PacketDecoder());
-                        channel.pipeline().addLast(new LoginRequestHandler());
-                        channel.pipeline().addLast(new AuthHandler());
-                        channel.pipeline().addLast(new MessageRequestHandler());
-                        channel.pipeline().addLast(new CreateGroupRequestHandler());
-                        channel.pipeline().addLast(new JoinGroupRequestHandler());
-                        channel.pipeline().addLast(new QuitGroupRequestHandler());
-                        channel.pipeline().addLast(new ListGroupMembersRequestHandler());
-                        channel.pipeline().addLast(new LogoutRequestHandler());
-                        channel.pipeline().addLast(new PacketEncoder());
+                        channel.pipeline().addLast(PacketCodecHandler.INSTANCE);
+                        channel.pipeline().addLast(LoginRequestHandler.INSTANCE);
+                        channel.pipeline().addLast(AuthHandler.INSTANCE);
+                        channel.pipeline().addLast(IMHandler.INSTANCE);
                     }
                 });
         bind(serverBootstrap);

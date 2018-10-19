@@ -5,6 +5,7 @@ import hanzo.protocol.response.MessageResponsePacket;
 import hanzo.session.Session;
 import hanzo.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -13,7 +14,13 @@ import io.netty.channel.SimpleChannelInboundHandler;
  *
  * @author igaozp
  */
+@ChannelHandler.Sharable
 public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
+    public static final MessageRequestHandler INSTANCE = new MessageRequestHandler();
+
+    public MessageRequestHandler() {
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext context, MessageRequestPacket messageRequestPacket) {
         // 获取消息发送方的会话信息

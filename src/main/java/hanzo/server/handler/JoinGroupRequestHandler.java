@@ -3,6 +3,7 @@ package hanzo.server.handler;
 import hanzo.protocol.request.JoinGroupRequestPacket;
 import hanzo.protocol.response.JoinGroupResponsePacket;
 import hanzo.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -12,7 +13,13 @@ import io.netty.channel.group.ChannelGroup;
  *
  * @author igaozp
  */
+@ChannelHandler.Sharable
 public class JoinGroupRequestHandler extends SimpleChannelInboundHandler<JoinGroupRequestPacket> {
+    public static final JoinGroupRequestHandler INSTANCE = new JoinGroupRequestHandler();
+
+    public JoinGroupRequestHandler() {
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext context, JoinGroupRequestPacket requestPacket) {
         // 将当前 Channel 加入到群聊的 Channel 分组中
