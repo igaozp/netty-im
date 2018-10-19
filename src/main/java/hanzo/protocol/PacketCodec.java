@@ -1,17 +1,10 @@
 package hanzo.protocol;
 
-import hanzo.protocol.request.CreateGroupRequestPacket;
-import hanzo.protocol.request.LoginRequestPacket;
-import hanzo.protocol.request.LogoutRequestPacket;
-import hanzo.protocol.request.MessageRequestPacket;
-import hanzo.protocol.response.CreateGroupResponsePacket;
-import hanzo.protocol.response.LoginResponsePacket;
-import hanzo.protocol.response.LogoutResponsePacket;
-import hanzo.protocol.response.MessageResponsePacket;
+import hanzo.protocol.request.*;
+import hanzo.protocol.response.*;
 import hanzo.serialize.Serializer;
 import hanzo.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 
 import static hanzo.protocol.command.Command.*;
 
@@ -39,6 +32,12 @@ public class PacketCodec {
         PACKET_TYPE_MAP.put(LOGOUT_RESPONSE, LogoutResponsePacket.class);
         PACKET_TYPE_MAP.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
         PACKET_TYPE_MAP.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
+        PACKET_TYPE_MAP.put(JOIN_GROUP_REQUEST, JoinGroupRequestPacket.class);
+        PACKET_TYPE_MAP.put(JOIN_GROUP_RESPONSE, JoinGroupResponsePacket.class);
+        PACKET_TYPE_MAP.put(QUIT_GROUP_REQUEST, QuitGroupRequestPacket.class);
+        PACKET_TYPE_MAP.put(QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
+        PACKET_TYPE_MAP.put(LIST_GROUP_MEMBERS_REQUEST, ListGroupMembersRequestPacket.class);
+        PACKET_TYPE_MAP.put(LIST_GROUP_MEMBERS_RESPONSE, ListGroupMembersResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();

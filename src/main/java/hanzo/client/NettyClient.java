@@ -49,12 +49,18 @@ public class NettyClient {
                         channel.pipeline().addLast(new PacketDecoder());
                         // 登录响应处理器
                         channel.pipeline().addLast(new LoginResponseHandler());
-                        // 登出响应处理器
-                        channel.pipeline().addLast(new LogoutResponseHandler());
                         // 消息响应处理器
                         channel.pipeline().addLast(new MessageResponseHandler());
                         // 创建群聊响应处理器
                         channel.pipeline().addLast(new CreateGroupResponseHandler());
+                        // 加入群组响应处理器
+                        channel.pipeline().addLast(new JoinGroupResponseHandler());
+                        // 退出群组响应处理器
+                        channel.pipeline().addLast(new QuitGroupResponseHandler());
+                        // 获取小组成员响应处理器
+                        channel.pipeline().addLast(new ListGroupMembersResponseHandler());
+                        // 用户登出响应处理器
+                        channel.pipeline().addLast(new LogoutResponseHandler());
                         // 协议包编码器
                         channel.pipeline().addLast(new PacketEncoder());
                     }
