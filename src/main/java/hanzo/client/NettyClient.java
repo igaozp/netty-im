@@ -6,6 +6,7 @@ import hanzo.client.handler.*;
 import hanzo.codec.PacketDecoder;
 import hanzo.codec.PacketEncoder;
 import hanzo.codec.Spliter;
+import hanzo.handler.IMIdleStateHandler;
 import hanzo.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -43,6 +44,8 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel channel) {
+                        // 空闲检测
+                        channel.pipeline().addLast(new IMIdleStateHandler());
                         // 粘包拆包处理器
                         channel.pipeline().addLast(new Spliter());
                         // 协议包解码器
@@ -65,6 +68,8 @@ public class NettyClient {
                         channel.pipeline().addLast(new LogoutResponseHandler());
                         // 协议包编码器
                         channel.pipeline().addLast(new PacketEncoder());
+                        // 心跳定时器
+                        channel.pipeline().addLast(new HeartBeatTimerHandler());
                     }
                 });
 

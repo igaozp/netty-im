@@ -4,6 +4,7 @@ import hanzo.codec.PacketCodecHandler;
 import hanzo.codec.PacketDecoder;
 import hanzo.codec.PacketEncoder;
 import hanzo.codec.Spliter;
+import hanzo.handler.IMIdleStateHandler;
 import hanzo.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -36,9 +37,11 @@ public class NettyServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel channel) {
+                        channel.pipeline().addLast(new IMIdleStateHandler());
                         channel.pipeline().addLast(new Spliter());
                         channel.pipeline().addLast(PacketCodecHandler.INSTANCE);
                         channel.pipeline().addLast(LoginRequestHandler.INSTANCE);
+                        channel.pipeline().addLast(HeartBeatRequestHandler.INSTANCE);
                         channel.pipeline().addLast(AuthHandler.INSTANCE);
                         channel.pipeline().addLast(IMHandler.INSTANCE);
                     }
