@@ -3,12 +3,12 @@ package hanzo.protocol;
 import lombok.Data;
 
 /**
- * Packet
+ * BasePacket
  *
  * @author igaozp
  */
 @Data
-public abstract class Packet {
+public abstract class BasePacket {
     /**
      * 协议版本
      */

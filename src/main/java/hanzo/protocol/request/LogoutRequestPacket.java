@@ -1,6 +1,6 @@
 package hanzo.protocol.request;
 
-import hanzo.protocol.Packet;
+import hanzo.protocol.BasePacket;
 import lombok.Data;
 
 import static hanzo.protocol.command.Command.LOGOUT_REQUEST;
@@ -11,7 +11,7 @@ import static hanzo.protocol.command.Command.LOGOUT_REQUEST;
  * @author igaozp
  */
 @Data
-public class LogoutRequestPacket extends Packet {
+public class LogoutRequestPacket extends BasePacket {
     @Override
     public Byte getCommand() {
         return LOGOUT_REQUEST;

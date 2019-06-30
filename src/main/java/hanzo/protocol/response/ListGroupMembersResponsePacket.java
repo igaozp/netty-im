@@ -1,6 +1,6 @@
 package hanzo.protocol.response;
 
-import hanzo.protocol.Packet;
+import hanzo.protocol.BasePacket;
 import hanzo.session.Session;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ import static hanzo.protocol.command.Command.LIST_GROUP_MEMBERS_RESPONSE;
  * @author igaozp
  */
 @Data
-public class ListGroupMembersResponsePacket extends Packet {
+public class ListGroupMembersResponsePacket extends BasePacket {
     private String groupId;
     private List<Session> sessionList;
 

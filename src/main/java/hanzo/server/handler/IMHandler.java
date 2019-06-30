@@ -1,15 +1,14 @@
 package hanzo.server.handler;
 
-import hanzo.protocol.Packet;
-import hanzo.protocol.request.JoinGroupRequestPacket;
+import hanzo.protocol.BasePacket;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-import static hanzo.protocol.command.Command.*;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import static hanzo.protocol.command.Command.*;
 
 /**
  * IMHandler
@@ -17,9 +16,9 @@ import java.util.Map;
  * @author igaozp
  */
 @ChannelHandler.Sharable
-public class IMHandler extends SimpleChannelInboundHandler<Packet> {
+public class IMHandler extends SimpleChannelInboundHandler<BasePacket> {
     public static final IMHandler INSTANCE = new IMHandler();
-    private Map<Byte, SimpleChannelInboundHandler<? extends Packet>> handlerMap;
+    private Map<Byte, SimpleChannelInboundHandler<? extends BasePacket>> handlerMap;
 
     private IMHandler() {
         handlerMap = new HashMap<>();
@@ -33,7 +32,7 @@ public class IMHandler extends SimpleChannelInboundHandler<Packet> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext context, Packet packet) throws Exception {
+    protected void channelRead0(ChannelHandlerContext context, BasePacket packet) throws Exception {
         handlerMap.get(packet.getCommand()).channelRead(context, packet);
     }
 }

@@ -6,10 +6,10 @@ import hanzo.serialize.Serializer;
 import hanzo.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
 
-import static hanzo.protocol.command.Command.*;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import static hanzo.protocol.command.Command.*;
 
 /**
  * PacketCodec
@@ -19,7 +19,7 @@ import java.util.Map;
 public class PacketCodec {
     public static final int MAGIC_NUMBER = 0x19120623;
     public static final PacketCodec INSTANCE = new PacketCodec();
-    private static final Map<Byte, Class<? extends Packet>> PACKET_TYPE_MAP;
+    private static final Map<Byte, Class<? extends BasePacket>> PACKET_TYPE_MAP;
     private static final Map<Byte, Serializer> SERIALIZER_MAP;
 
     static {
@@ -48,7 +48,7 @@ public class PacketCodec {
         SERIALIZER_MAP.put(serializer.getSerializerAlgorithm(), serializer);
     }
 
-    public void encode(ByteBuf byteBuf, Packet packet) {
+    public void encode(ByteBuf byteBuf, BasePacket packet) {
         // 序列化对象
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
 
@@ -61,7 +61,7 @@ public class PacketCodec {
         byteBuf.writeBytes(bytes);
     }
 
-    public Packet decode(ByteBuf byteBuf) {
+    public BasePacket decode(ByteBuf byteBuf) {
         // 跳过 Magic Number
         byteBuf.skipBytes(4);
 
@@ -80,7 +80,7 @@ public class PacketCodec {
         byte[] bytes = new byte[length];
         byteBuf.readBytes(bytes);
 
-        Class<? extends Packet> requestType = getRequestType(command);
+        Class<? extends BasePacket> requestType = getRequestType(command);
         Serializer serializer = getSerializer(serializeAlgorithm);
 
         if (requestType != null && serializer != null) {
@@ -94,7 +94,7 @@ public class PacketCodec {
         return SERIALIZER_MAP.get(serializeAlgorithm);
     }
 
-    private Class<? extends Packet> getRequestType(byte command) {
+    private Class<? extends BasePacket> getRequestType(byte command) {
         return PACKET_TYPE_MAP.get(command);
     }
 }

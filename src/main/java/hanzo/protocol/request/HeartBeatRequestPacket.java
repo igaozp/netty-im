@@ -1,6 +1,6 @@
 package hanzo.protocol.request;
 
-import hanzo.protocol.Packet;
+import hanzo.protocol.BasePacket;
 
 import static hanzo.protocol.command.Command.HEARTBEAT_REQUEST;
 
@@ -9,7 +9,7 @@ import static hanzo.protocol.command.Command.HEARTBEAT_REQUEST;
  *
  * @author igaozp
  */
-public class HeartBeatRequestPacket extends Packet {
+public class HeartBeatRequestPacket extends BasePacket {
     @Override
     public Byte getCommand() {
         return HEARTBEAT_REQUEST;

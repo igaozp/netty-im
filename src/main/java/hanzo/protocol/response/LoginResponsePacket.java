@@ -1,6 +1,6 @@
 package hanzo.protocol.response;
 
-import hanzo.protocol.Packet;
+import hanzo.protocol.BasePacket;
 import lombok.Data;
 
 import static hanzo.protocol.command.Command.LOGIN_RESPONSE;
@@ -11,7 +11,7 @@ import static hanzo.protocol.command.Command.LOGIN_RESPONSE;
  * @author igaozp
  */
 @Data
-public class LoginResponsePacket extends Packet {
+public class LoginResponsePacket extends BasePacket {
     private String userId;
     private String userName;
     private boolean success;

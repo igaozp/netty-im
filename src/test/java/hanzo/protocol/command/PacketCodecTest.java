@@ -1,6 +1,6 @@
 package hanzo.protocol.command;
 
-import hanzo.protocol.Packet;
+import hanzo.protocol.BasePacket;
 import hanzo.protocol.PacketCodec;
 import hanzo.protocol.request.LoginRequestPacket;
 import hanzo.serialize.Serializer;
@@ -32,7 +32,7 @@ public class PacketCodecTest {
         ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
 
         packetCodec.encode(byteBuf, loginRequestPacket);
-        Packet decodePacket = packetCodec.decode(byteBuf);
+        BasePacket decodePacket = packetCodec.decode(byteBuf);
 
         Assert.assertArrayEquals(serializer.serialize(loginRequestPacket), serializer.serialize(decodePacket));
     }

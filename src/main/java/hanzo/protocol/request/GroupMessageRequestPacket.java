@@ -1,6 +1,6 @@
 package hanzo.protocol.request;
 
-import hanzo.protocol.Packet;
+import hanzo.protocol.BasePacket;
 import lombok.Data;
 
 import static hanzo.protocol.command.Command.GROUP_MESSAGE_REQUEST;
@@ -11,7 +11,7 @@ import static hanzo.protocol.command.Command.GROUP_MESSAGE_REQUEST;
  * @author igaozp
  */
 @Data
-public class GroupMessageRequestPacket extends Packet {
+public class GroupMessageRequestPacket extends BasePacket {
     private String toGroupId;
     private String message;
 

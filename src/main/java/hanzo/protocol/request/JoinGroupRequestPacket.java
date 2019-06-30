@@ -1,6 +1,6 @@
 package hanzo.protocol.request;
 
-import hanzo.protocol.Packet;
+import hanzo.protocol.BasePacket;
 import lombok.Data;
 
 import static hanzo.protocol.command.Command.JOIN_GROUP_REQUEST;
@@ -11,7 +11,7 @@ import static hanzo.protocol.command.Command.JOIN_GROUP_REQUEST;
  * @author igaozp
  */
 @Data
-public class JoinGroupRequestPacket extends Packet {
+public class JoinGroupRequestPacket extends BasePacket {
     private String groupId;
 
     @Override

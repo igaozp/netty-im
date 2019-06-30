@@ -1,6 +1,6 @@
 package hanzo.codec;
 
-import hanzo.protocol.Packet;
+import hanzo.protocol.BasePacket;
 import hanzo.protocol.PacketCodec;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author igaozp
  */
 @ChannelHandler.Sharable
-public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
+public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, BasePacket> {
     public static final PacketCodecHandler INSTANCE = new PacketCodecHandler();
 
     private PacketCodecHandler() {
@@ -27,7 +27,7 @@ public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
     }
 
     @Override
-    protected void encode(ChannelHandlerContext context, Packet packet, List<Object> out) {
+    protected void encode(ChannelHandlerContext context, BasePacket packet, List<Object> out) {
         ByteBuf byteBuf = context.channel().alloc().ioBuffer();
         PacketCodec.INSTANCE.encode(byteBuf, packet);
         out.add(byteBuf);
