@@ -1,5 +1,6 @@
 package hanzo.client;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import hanzo.client.console.ConsoleCommandManager;
 import hanzo.client.console.LoginConsoleCommand;
 import hanzo.client.handler.*;
@@ -30,6 +31,9 @@ public class NettyClient {
     private final static int MAX_RETRY = 5;
     private final static String HOST = "127.0.0.1";
     private final static int PORT = 8000;
+    private static ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("console-pool-%d").build();
+    private static ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<>(1024), namedThreadFactory);
 
     public static void main(String[] args) {
         NioEventLoopGroup group = new NioEventLoopGroup();
@@ -100,7 +104,7 @@ public class NettyClient {
         LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
         Scanner scanner = new Scanner(System.in);
 
-        new Thread(() -> {
+        singleThreadPool.execute(() -> {
             while (!Thread.interrupted()) {
                 if (!SessionUtil.hasLogin(channel)) {
                     loginConsoleCommand.exec(scanner, channel);
@@ -108,6 +112,7 @@ public class NettyClient {
                     consoleCommandManager.exec(scanner, channel);
                 }
             }
-        }).start();
+        });
+        singleThreadPool.shutdown();
     }
 }
