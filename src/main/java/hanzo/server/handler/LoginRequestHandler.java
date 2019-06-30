@@ -8,6 +8,7 @@ import hanzo.util.SessionUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -16,12 +17,10 @@ import java.util.Date;
  *
  * @author igaozp
  */
+@NoArgsConstructor
 @ChannelHandler.Sharable
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
     public static final LoginRequestHandler INSTANCE = new LoginRequestHandler();
-
-    public LoginRequestHandler() {
-    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, LoginRequestPacket loginRequestPacket) {

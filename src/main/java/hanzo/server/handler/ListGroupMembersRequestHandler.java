@@ -9,6 +9,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,10 @@ import java.util.List;
  *
  * @author igaozp
  */
+@NoArgsConstructor
 @ChannelHandler.Sharable
 public class ListGroupMembersRequestHandler extends SimpleChannelInboundHandler<ListGroupMembersRequestPacket> {
     public static final ListGroupMembersRequestHandler INSTANCE = new ListGroupMembersRequestHandler();
-
-    public ListGroupMembersRequestHandler() {
-    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, ListGroupMembersRequestPacket requestPacket) {

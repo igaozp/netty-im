@@ -7,18 +7,17 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
+import lombok.NoArgsConstructor;
 
 /**
  * JoinGroupRequestHandler
  *
  * @author igaozp
  */
+@NoArgsConstructor
 @ChannelHandler.Sharable
 public class JoinGroupRequestHandler extends SimpleChannelInboundHandler<JoinGroupRequestPacket> {
     public static final JoinGroupRequestHandler INSTANCE = new JoinGroupRequestHandler();
-
-    public JoinGroupRequestHandler() {
-    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, JoinGroupRequestPacket requestPacket) {

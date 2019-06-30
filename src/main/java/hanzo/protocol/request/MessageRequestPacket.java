@@ -2,7 +2,9 @@ package hanzo.protocol.request;
 
 import hanzo.protocol.BasePacket;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import static hanzo.protocol.command.Command.MESSAGE_REQUEST;
 
@@ -13,6 +15,8 @@ import static hanzo.protocol.command.Command.MESSAGE_REQUEST;
  */
 @Data
 @NoArgsConstructor
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class MessageRequestPacket extends BasePacket {
     private String toUserId;
     private String message;

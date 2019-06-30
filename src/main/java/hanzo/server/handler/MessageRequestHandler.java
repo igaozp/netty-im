@@ -8,18 +8,17 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.NoArgsConstructor;
 
 /**
  * MessageRequestHandler
  *
  * @author igaozp
  */
+@NoArgsConstructor
 @ChannelHandler.Sharable
 public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
     public static final MessageRequestHandler INSTANCE = new MessageRequestHandler();
-
-    public MessageRequestHandler() {
-    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, MessageRequestPacket messageRequestPacket) {

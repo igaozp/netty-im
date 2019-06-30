@@ -10,6 +10,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,10 @@ import java.util.List;
  *
  * @author igaozp
  */
+@NoArgsConstructor
 @ChannelHandler.Sharable
 public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
     public static final CreateGroupRequestHandler INSTANCE = new CreateGroupRequestHandler();
-
-    public CreateGroupRequestHandler() {
-    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, CreateGroupRequestPacket createGroupRequestPacket) {

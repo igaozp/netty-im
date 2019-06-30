@@ -2,6 +2,8 @@ package hanzo.protocol.response;
 
 import hanzo.protocol.BasePacket;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import static hanzo.protocol.command.Command.LOGIN_RESPONSE;
 
@@ -11,6 +13,8 @@ import static hanzo.protocol.command.Command.LOGIN_RESPONSE;
  * @author igaozp
  */
 @Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class LoginResponsePacket extends BasePacket {
     private String userId;
     private String userName;
